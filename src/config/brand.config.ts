@@ -4,7 +4,7 @@ export const BRAND = {
   contact: "+91 96340 46806",
   mail:"floweryfairydehradun@gmail.com",
   theme: {
-    primary: "#166534",
+    primary: "#009688",
     secondary: "#22C55E",
     accent: "#F0FDF4",
   },

@@ -43,20 +43,26 @@ export function CategoryRow() {
 
   return (
     <section className="py-8">
-      <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex w-max space-x-6 pb-4">
-          {categories.map((cat) => (
-            <div key={cat.name} className="flex flex-col items-center gap-3 cursor-pointer group">
-              <div className="h-20 w-20 md:h-28 md:w-28 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm flex items-center justify-center text-3xl group-hover:scale-105 transition-transform duration-300">
-                {cat.icon}
-              </div>
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-tight">{cat.name}</span>
-            </div>
-          ))}
+  <ScrollArea className="w-full whitespace-nowrap">
+    {/* 1. Removed w-max 
+        2. Added w-full 
+        3. Added justify-center 
+    */}
+    <div className="flex w-full justify-center space-x-6 pb-4">
+      {categories.map((cat) => (
+        <div key={cat.name} className="flex flex-col items-center gap-3 cursor-pointer group">
+          <div className="h-20 w-20 md:h-28 md:w-28 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm flex items-center justify-center text-3xl group-hover:scale-105 transition-transform duration-300">
+            {cat.icon}
+          </div>
+          <span className="text-xs font-bold text-slate-700 uppercase tracking-tight">
+            {cat.name}
+          </span>
         </div>
-        <ScrollBar orientation="horizontal" className="invisible" />
-      </ScrollArea>
-    </section>
+      ))}
+    </div>
+    <ScrollBar orientation="horizontal" className="invisible" />
+  </ScrollArea>
+</section>
   );
 }
 
