@@ -1,10 +1,11 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { 
-  HeroBanner, CategoryRow, OccasionGrid, ProductShowcase, 
+  HeroBanner, CategoryRow, OccasionGrid,  
   SpecialOffer, InfoCards, EventGiftingGuide, TeddyPromo, 
   Testimonials, BlogSection,  WhatsAppCTA
 } from "@/components/home/HomeSections";
+import { ProductShowcase } from "@/components/home/ProductShowcase";
 
 export default function Home() {
   return (
@@ -14,7 +15,9 @@ export default function Home() {
         <HeroBanner />
         <CategoryRow />
         <OccasionGrid />
-        <ProductShowcase title="Best Selling Flowers & Gifts" />
+{/* Dynamic Sections using the shared logic */}
+      <ProductShowcase title="Best Selling Flowers" />
+      <ProductShowcase title="Fresh Birthday Cakes" category="cakes" />
         <SpecialOffer />
         <InfoCards />
         <EventGiftingGuide />

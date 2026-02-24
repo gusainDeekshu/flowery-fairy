@@ -92,39 +92,39 @@ export function OccasionGrid() {
  * 6️⃣ BEST SELLING FLOWERS & GIFTS
  * Product grid with Sale badges and Wishlist icons.
  */
-export function ProductShowcase({ title }: { title: string }) {
-  const products = [1, 2, 3, 4, 5, 6, 7, 8];
-  return (
-    <section className="py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-black text-slate-800">{title}</h2>
-        <Button variant="outline" className="rounded-full border-[#006044] text-[#006044] font-bold text-xs h-8">View All</Button>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        {products.map((p) => (
-          <div key={p} className="group relative flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
-            <Badge className="absolute top-3 left-0 rounded-l-none bg-[#006044] px-3 py-1 text-[10px] font-bold z-10">SALE</Badge>
-            <button className="absolute top-3 right-3 p-1.5 bg-white/90 rounded-full text-slate-400 hover:text-red-500 z-10 shadow-sm"><Heart size={16} /></button>
-            <div className="aspect-[4/5] bg-slate-50 overflow-hidden">
-              <img src="https://plus.unsplash.com/premium_photo-1661609624774-764931dee3af?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Product" />
-            </div>
-            <div className="p-4 flex flex-col gap-1">
-              <h3 className="text-xs font-bold text-slate-800 truncate">Premium Roses Bouquet</h3>
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} size={10} className="fill-yellow-400 text-yellow-400" />)}
-              </div>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-base font-black text-[#006044]">₹499</span>
-                <span className="text-[10px] text-slate-400 line-through font-bold">₹699</span>
-              </div>
-              <Button className="w-full mt-3 bg-[#006044] hover:bg-[#004d3d] text-white rounded-lg text-xs font-bold h-9">ADD TO CART</Button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+// export function ProductShowcase({ title }: { title: string }) {
+//   const products = [1, 2, 3, 4, 5, 6, 7, 8];
+//   return (
+//     <section className="py-8">
+//       <div className="flex items-center justify-between mb-6">
+//         <h2 className="text-xl font-black text-slate-800">{title}</h2>
+//         <Button variant="outline" className="rounded-full border-[#006044] text-[#006044] font-bold text-xs h-8">View All</Button>
+//       </div>
+//       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+//         {products.map((p) => (
+//           <div key={p} className="group relative flex flex-col bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+//             <Badge className="absolute top-3 left-0 rounded-l-none bg-[#006044] px-3 py-1 text-[10px] font-bold z-10">SALE</Badge>
+//             <button className="absolute top-3 right-3 p-1.5 bg-white/90 rounded-full text-slate-400 hover:text-red-500 z-10 shadow-sm"><Heart size={16} /></button>
+//             <div className="aspect-[4/5] bg-slate-50 overflow-hidden">
+//               <img src="https://plus.unsplash.com/premium_photo-1661609624774-764931dee3af?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Product" />
+//             </div>
+//             <div className="p-4 flex flex-col gap-1">
+//               <h3 className="text-xs font-bold text-slate-800 truncate">Premium Roses Bouquet</h3>
+//               <div className="flex items-center gap-1">
+//                 {[...Array(5)].map((_, i) => <Star key={i} size={10} className="fill-yellow-400 text-yellow-400" />)}
+//               </div>
+//               <div className="flex items-baseline gap-2 mt-1">
+//                 <span className="text-base font-black text-[#006044]">₹499</span>
+//                 <span className="text-[10px] text-slate-400 line-through font-bold">₹699</span>
+//               </div>
+//               <Button className="w-full mt-3 bg-[#006044] hover:bg-[#004d3d] text-white rounded-lg text-xs font-bold h-9">ADD TO CART</Button>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </section>
+//   );
+// }
 
 /**
  * 7️⃣ VALENTINE'S SPECIAL OFFER BANNER

@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 import { BRAND } from "@/config/brand.config";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Flower Fairy | Premium Gifts",
@@ -20,10 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       }}>
         <div className="flex flex-col min-h-screen">
           <Header />
+          <QueryProvider>
           {/* Use max-w-7xl to look great on Laptop screens */}
           <main className="flex-1 w-full max-w-7xl mx-auto px-4 md:px-8 py-6">
             {children}
           </main>
+          </QueryProvider>
           <Footer />
           {/* Mobile only navigation */}
          
