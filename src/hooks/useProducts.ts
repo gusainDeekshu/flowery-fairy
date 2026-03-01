@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 
 export function useProducts(categorySlug?: string) {
+  console.log('Fetching products for category:', categorySlug);
   return useQuery({
     queryKey: ['store-catalog', 'flower-fairy-dehradun', categorySlug],
     queryFn: async () => {
