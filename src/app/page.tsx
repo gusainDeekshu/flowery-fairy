@@ -7,6 +7,8 @@ import {
 } from "@/components/home/HomeSections";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 
+
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">

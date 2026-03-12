@@ -31,7 +31,6 @@ export class ProductApi {
       params: { category },
     });
 
-    console.log("RAW PRODUCTS:", res);
 
     const validated = z.array(ProductSchema).parse(res);
 
@@ -44,7 +43,6 @@ export class ProductApi {
     try {
       const res = await apiClient.get(`/products/${slug}`);
 
-      console.log("RAW PRODUCT:", res);
 
       const validated = ProductSchema.parse(res);
 
@@ -60,7 +58,6 @@ export class ProductApi {
   static async getSimilarProducts(category: string): Promise<SimilarProduct[]> {
     const res = await apiClient.get(`/products/similar/${category}`);
 
-    console.log("RAW SIMILAR PRODUCTS:", res);
 
     const validated = z.array(SimilarProductSchema).parse(res);
 
