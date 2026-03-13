@@ -1,22 +1,46 @@
-// src/store/useAuthStore.ts
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+
+interface User {
+  id: string;
+  email: string;
+  role: string;
+  name: string;
+}
 
 interface AuthState {
-  token: string | null;
-  user: any | null;
-  setAuth: (user: any, token: string) => void;
+  user: User | null;
+  accessToken: string | null; // In-memory short-lived token
+  isAuthenticated: boolean;
+  setAuth: (user: User, token: string) => void;
+  setAccessToken: (token: string) => void; // Method to update token after refresh
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  token: null,
-  user: null,
-  setAuth: (user, token) => {
-    localStorage.setItem('token', token);
-    set({ user, token });
-  },
-  logout: () => {
-    localStorage.removeItem('token');
-    set({ user: null, token: null });
-  },
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      accessToken: null,
+      isAuthenticated: false,
+      setAuth: (user, token) => 
+        set({ user, accessToken: token, isAuthenticated: true }),
+      setAccessToken: (token) => 
+        set({ accessToken: token }),
+      logout: () => {
+        set({ user: null, accessToken: null, isAuthenticated: false });
+        // Optional: Call backend /auth/logout to clear HttpOnly cookies
+      },
+    }),
+    {
+      name: 'flower-fairy-auth',
+      storage: createJSONStorage(() => localStorage),
+      // IMPORTANT: Only persist non-sensitive data. 
+      // Do NOT persist accessToken to localStorage for production safety.
+      partialize: (state) => ({ 
+        user: state.user, 
+        isAuthenticated: state.isAuthenticated 
+      }),
+    }
+  )
+);

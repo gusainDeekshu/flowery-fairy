@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { 
   Search, ShoppingCart, MapPin, ChevronDown, 
   User, Phone, Mail, Home, LayoutGrid, 
-  Gift, MessageSquare 
+  Gift, MessageSquare, LogOut, Package, Settings
 } from "lucide-react";
 import Link from "next/link";
 import { BRAND } from "@/config/brand.config";
@@ -14,13 +14,31 @@ import { OtpModal } from "@/components/auth/OtpModal";
 
 export function Header() {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   
   // Zustand State
   const cartItems = useCartStore((state) => state.items);
-  const user = useAuthStore((state) => state.user);
+  const { user, logout } = useAuthStore();
   
   // Calculate total items in cart
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsDropdownOpen(false);
+  };
 
   return (
     <>
@@ -58,7 +76,7 @@ export function Header() {
 
             {/* Mobile Actions */}
             <div className="flex lg:hidden items-center gap-4">
-               <button onClick={() => !user && setLoginModalOpen(true)}>
+               <button onClick={() => !user ? setLoginModalOpen(true) : setIsDropdownOpen(!isDropdownOpen)}>
                   <User size={22} className={user ? "text-[#006044]" : "text-gray-600"} />
                </button>
                <Link href="/cart" className="relative">
@@ -89,15 +107,61 @@ export function Header() {
             </div>
           </div>
 
-          {/* Desktop Actions */}
+          {/* Desktop Actions with Dropdown */}
           <div className="hidden lg:flex items-center gap-6">
-            <button 
-              onClick={() => !user && setLoginModalOpen(true)}
-              className="flex items-center gap-2 text-gray-800 font-medium hover:text-[#006044] transition-colors"
-            >
-              <User size={20} />
-              <span>{user ? user.name : "Sign In"}</span>
-            </button>
+            <div className="relative" ref={dropdownRef}>
+              <button 
+                onClick={() => !user ? setLoginModalOpen(true) : setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center gap-2 text-gray-800 font-medium hover:text-[#006044] transition-colors group"
+              >
+                <User size={20} className={user ? "text-[#006044]" : ""} />
+                <span className="max-w-[120px] truncate">
+                  {user ? (user.email?.split('@')[0]) : "Sign In"}
+                </span>
+                {user && (
+                  <ChevronDown 
+                    size={16} 
+                    className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                  />
+                )}
+              </button>
+
+              {/* User Dropdown Menu */}
+              {user && isDropdownOpen && (
+                <div className="absolute right-0 mt-3 w-56 bg-white border border-gray-100 rounded-xl shadow-xl py-2 z-[60] animate-in fade-in slide-in-from-top-2">
+                  <div className="px-4 py-2 border-b border-gray-50 mb-1">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Account</p>
+                    <p className="text-sm font-semibold text-gray-700 truncate">{user.email}</p>
+                  </div>
+                  
+                  <Link 
+                    href="/orders" 
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#006044] transition-colors"
+                  >
+                    <Package size={16} /> My Orders
+                  </Link>
+
+                  <Link 
+                    href="/profile" 
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#006044] transition-colors"
+                  >
+                    <Settings size={16} /> Settings
+                  </Link>
+
+                  <div className="h-px bg-gray-50 my-1 mx-2" />
+
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                  >
+                    <LogOut size={16} /> Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+
             <Link href="/cart" className="flex items-center gap-2 text-gray-800 font-medium relative hover:text-[#006044] transition-colors">
               <ShoppingCart size={20} />
               <span>Cart</span>
@@ -147,7 +211,7 @@ export function Header() {
           <span className="text-[10px] mt-1 font-medium">Support</span>
         </Link>
         <button 
-          onClick={() => !user ? setLoginModalOpen(true) : window.location.href='/account'}
+          onClick={() => !user ? setLoginModalOpen(true) : setIsDropdownOpen(!isDropdownOpen)}
           className="flex flex-col items-center justify-center w-full h-full text-gray-500"
         >
           <User size={20} />
